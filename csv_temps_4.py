@@ -32,7 +32,7 @@ for row in csv_file:
         dates.append(current_date)
     
 
-#print(highs[:10])
+#print(highs[:10]1)
 
 fig=plt.figure()
 
