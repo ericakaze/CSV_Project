@@ -40,7 +40,27 @@ for row in csv_file:
             highs.append(high)
             lows.append(low)
 
-fig, ax = plt.subplots(2,2)
+""" fig, ax = plt.subplots(2,2)
 
 plt.subplot(dates, highs,color='red', alpha=0.5)
-plt.subplot(dates, lows, color='blue', alpha=0.5)
+plt.subplot(dates, lows, color='blue', alpha=0.5) """
+
+fig, (ax1, ax2)= plt.subplots(2,2)
+ax1.plot(dates, highs,lows, color='red', alpha=0.5)
+ax1.set_title('Highs')
+ax2.plot(dates, highs,lows, color='blue', alpha=0.5)
+ax2.set_title('lows')
+
+plt.show()
+
+
+""" plt.plot(dates, highs,color='red', alpha=0.5)
+plt.plot(dates, lows, color='blue', alpha=0.5)
+
+plt.fill_between(dates,highs,lows,facecolor="blue", alpha=0.3)
+plt.title("daily high temps for death valley 2018", fontsize=16)
+plt.xlabel ("", fontsize=8)
+plt.ylabel ("Temperature (F)", fontsize=12)
+plt.tick_params (axis='both', which="major", labelsize=12)
+
+fig.autofmt_xdate() """
