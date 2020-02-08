@@ -30,9 +30,9 @@ plt.plot(dates, highs, color='red')
 plt.title("daily high temps, July2018", fontsize=16)
 plt.xlabel ("", fontsize=12)
 plt.ylabel ("Temperature (F)", fontsize=12)
-plt.tick_params (axis='both', which="major", labelsize=12)
+plt.tick_params (axis="both", which="major", labelsize=12)
 
-fig.autofmt_xdate()
+fig.autofmt_xdate() # makes dates fit diagonally 
 
 
 plt.show()

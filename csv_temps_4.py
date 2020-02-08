@@ -25,7 +25,7 @@ for row in csv_file:
         current_date = datetime.strptime(row[2],'%Y-%m-%d') #changed this
 
     except ValueError:
-        print(f"Missing data for {current_date}")
+        print(f"Missing data for {current_date}") ##shows us where there is  missing data 
     else:
         highs.append(high)
         lows.append(low)
@@ -40,9 +40,9 @@ fig=plt.figure()
 plt.plot(dates, highs,color='red', alpha=0.5)
 plt.plot(dates, lows, color='blue', alpha=0.5)
 
-plt.fill_between(dates,highs,lows,facecolor="blue", alpha=0.1)
+plt.fill_between(dates,highs,lows,facecolor="blue", alpha=0.3)
 plt.title("daily high temps for death valley 2018", fontsize=16)
-plt.xlabel ("", fontsize=12)
+plt.xlabel ("", fontsize=8)
 plt.ylabel ("Temperature (F)", fontsize=12)
 plt.tick_params (axis='both', which="major", labelsize=12)
 
