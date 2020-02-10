@@ -1,66 +1,70 @@
-import matplotlib.pyplot as plt
-import csv
-from datetime import datetime 
+def main():
+    import matplotlib.pyplot as plt
+    #import csv
+    from datetime import datetime 
 
-open_file= open("death_valley_2018_simple.csv", "r")
-open_file= open("sitka_weather_07-2018_simple.csv", "r")
-place_name = ''
-
-csv_file=csv.reader(open_file, delimiter=",")
-
-header_row= next (csv_file)
-
-print(type(header_row))
-
-date_index = header_row.index('DATE')
-high_index = header_row.index('TMAX')
-low_index = header_row.index('TMIN')
-name_index = header_row.index('NAME')
-
-for index, column_header in enumerate (header_row):
-    print(index, column_header)
-
-highs =[]
-dates= []
-lows= []
-for row in csv_file:
-
-        if not place_name:
-            place_name = row[name_index]
-            print(place_name)
+    open_file1= "death_valley_2018_simple.csv"
+    open_file= "sitka_weather_2018_simple.csv"
+    place_name = [open_file,open_file1] #### this is a list of all the file names we need to use 
+    p=0
+    
+    fig, ax  =plt.subplots(2,1, sharex=False) ### two rows and one column , first row as 0, second row as 1
+    fig.suptitle("Temperature Comparison between SITKA AIRPORT, AK US and DEATH VALLEY, CA US")
+    for i in place_name:
         
-        try:
-            high = int(row[high_index])
-            low = int(row[low_index])
-            current_date = datetime.strptime(row[date_index], '%Y-%m-%d')
-        except ValueError:
-            print(f"Missing data for {current_date}")
-        else:
-            dates.append(current_date)
-            highs.append(high)
-            lows.append(low)
+        a,b,c,d= data(i)   #### for each file, get the dates, highs, lows and station_name
+        ax[p].plot(a, b, color='red', alpha=0.5)   #plot, date and highs on row p where p is 0 for the first loop
 
-""" fig, ax = plt.subplots(2,2)
+        ax[p].plot(a, c, color='blue', alpha=0.5) #p is still 0 as it is plotting for the lows and still in the first loop
+        ax[p].fill_between(a,c,b ,facecolor="blue", alpha=0.3)
+        ax[p].set_title((d[0:-4]),fontsize=12) ## d is the station name and it is being sliced from the back,, 4 places to remove .csv
+        p += 1 ### so here it goes back into line 29 and does the same thing 
 
-plt.subplot(dates, highs,color='red', alpha=0.5)
-plt.subplot(dates, lows, color='blue', alpha=0.5) """
+        fig.autofmt_xdate() ### to format dates 
+   
+    
+    
+    plt.show()
 
-fig, (ax1, ax2)= plt.subplots(2,2)
-ax1.plot(dates, highs,lows, color='red', alpha=0.5)
-ax1.set_title('Highs')
-ax2.plot(dates, highs,lows, color='blue', alpha=0.5)
-ax2.set_title('lows')
+def data (x): 
+   #import matplotlib.pyplot as plt
+    import csv
+    from datetime import datetime 
 
-plt.show()
+    open_file= open(x, "r")
+    csv_file= csv.reader(open_file, delimiter=",")
+
+    header_row= next (csv_file)
 
 
-""" plt.plot(dates, highs,color='red', alpha=0.5)
-plt.plot(dates, lows, color='blue', alpha=0.5)
+    date_index = header_row.index('DATE')
+    high_index = header_row.index('TMAX')
+    low_index = header_row.index('TMIN')
+    name_index = header_row.index('NAME')
 
-plt.fill_between(dates,highs,lows,facecolor="blue", alpha=0.3)
-plt.title("daily high temps for death valley 2018", fontsize=16)
-plt.xlabel ("", fontsize=8)
-plt.ylabel ("Temperature (F)", fontsize=12)
-plt.tick_params (axis='both', which="major", labelsize=12)
 
-fig.autofmt_xdate() """
+
+    highs =[]
+    dates= []
+    lows= []
+    
+    for row in csv_file:
+
+            try:
+                high = int(row[high_index])
+                low = int(row[low_index])
+                current_date = datetime.strptime(row[date_index], '%Y-%m-%d')
+            except ValueError:
+                print(f"Missing data for {current_date}")
+            else:
+                dates.append(current_date)
+                highs.append(high)
+                lows.append(low)
+            station_name=row[1]
+    return dates, highs ,lows, station_name
+
+
+
+
+
+main()
